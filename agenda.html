@@ -1,0 +1,104 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda - TempoFrio</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        header {
+            background-color: #fff;
+            text-align: center;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+        .red {
+            color: red;
+        }
+        .blue {
+            color: blue;
+        }
+        main {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 20px;            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        .no-data {
+            text-align: center;
+            color: #555;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1><span class="red">Tempo</span><span class="blue">Frio</span></h1>
+    </header>
+    <main>
+        <h2>Agenda de Agendamentos</h2>
+        <table id="agenda-table">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Data</th>
+                    <th>Hora</th>
+                </tr>
+            </thead>
+            <tbody id="agenda-body">
+                <!-- Os agendamentos serão carregados aqui -->
+            </tbody>
+        </table>
+        <p id="no-data" class="no-data">Nenhum agendamento encontrado.</p>
+    </main>
+
+    <script>
+        function carregarAgendamentos() {
+            const agendamentos = JSON.parse(localStorage.getItem('agendamentos')) || [];
+            const tabelaCorpo = document.getElementById('agenda-body');
+            const mensagemSemDados = document.getElementById('no-data');
+
+            if (agendamentos.length > 0) {
+                mensagemSemDados.style.display = 'none';
+                tabelaCorpo.innerHTML = agendamentos.map(agendamento => {
+                    return `<tr>
+                        <td>${agendamento.nome}</td>
+                        <td>${agendamento.data}</td>
+                        <td>${agendamento.hora}</td>
+                    </tr>`;
+                }).join('');
+            } else {
+                mensagemSemDados.style.display = 'block';
+            }
+        }
+
+        carregarAgendamentos();
+    </script>
+</body>
+</html>
